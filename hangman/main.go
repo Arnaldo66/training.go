@@ -25,5 +25,6 @@ func main() {
 		}
 
 		guess = l
+		g.MakeAGuess(guess)
 	}
 }

@@ -25,3 +25,47 @@ func New(turns int, word string) *Game  {
 		TurnsLeft:    turns,
 	}
 }
+
+func (g *Game) MakeAGuess(guess string)  {
+	guess = strings.ToUpper(guess)
+
+	if letterInWord(guess, g.UsedLetters) {
+		g.State = "alreadyGuessed"
+	} else if letterInWord(guess, g.Letters) {
+		g.State = "goodGuess"
+		g.RevealLetter(guess)
+
+		if hasWon(g.Letters, g.FoundLetters) {
+			g.State = "won"
+		}
+	}
+}
+
+func (g *Game) RevealLetter(guess string) {
+	g.UsedLetters = append(g.UsedLetters, guess)
+	for i, letter := range g.Letters {
+		if letter == guess {
+			g.FoundLetters[i] = letter
+		}
+	}
+}
+
+func letterInWord(guess string, letters []string) bool  {
+	for _, l := range letters {
+		if l == guess {
+			return true
+		}
+	}
+
+	return false
+}
+
+func hasWon(letters []string, foundLetter []string) bool  {
+	for i := range letters {
+		if letters[i] != foundLetter[i] {
+			return false
+		}
+	}
+
+	return true
+}
