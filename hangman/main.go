@@ -4,10 +4,17 @@ import (
 	"fmt"
 	"os"
 	"training.go/hangman/hangman"
+	"training.go/hangman/dictionary"
 )
 
 func main() {
-	g := hangman.New(8,"test")
+	err := dictionary.Load("words.txt")
+	if err != nil {
+		fmt.Printf("Cannot open file %v" err)
+		os.Exit(1)
+	}
+
+	g := hangman.New(8,dictionary.PickWord())
 
 	hangman.DrawWelcome()
 

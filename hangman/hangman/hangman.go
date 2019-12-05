@@ -38,6 +38,13 @@ func (g *Game) MakeAGuess(guess string)  {
 		if hasWon(g.Letters, g.FoundLetters) {
 			g.State = "won"
 		}
+	} else {
+		g.State = "badGuess"
+		g.UsedLetters = append(g.UsedLetters, guess)
+		g.TurnsLeft -= 1
+		if g.TurnsLeft <= 0 {
+			g.State = "lost"
+		}
 	}
 }
 
