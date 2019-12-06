@@ -1,6 +1,9 @@
 package hangman
 
-import "strings"
+import (
+	"strings"
+	"fmt"
+)
 
 type Game struct {
 	State string
@@ -10,7 +13,11 @@ type Game struct {
 	TurnsLeft int
 }
 
-func New(turns int, word string) *Game  {
+func New(turns int, word string) (*Game, error)  {
+	if len(word) < 3 {
+		return nil, fmt.Errorf("Min word 3 char")
+	}
+
 	letters := strings.Split(strings.ToUpper(word), "")
 	found := make([]string, len(letters))
 	for i := 0; i < len(found); i++ {
@@ -23,7 +30,7 @@ func New(turns int, word string) *Game  {
 		FoundLetters: found,
 		UsedLetters:  []string{},
 		TurnsLeft:    turns,
-	}
+	}, nil
 }
 
 func (g *Game) MakeAGuess(guess string)  {

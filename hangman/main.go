@@ -10,7 +10,7 @@ import (
 func main() {
 	err := dictionary.Load("words.txt")
 	if err != nil {
-		fmt.Printf("Cannot open file %v" err)
+		fmt.Printf("Cannot open file %v", err)
 		os.Exit(1)
 	}
 
